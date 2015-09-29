@@ -26,7 +26,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 require('./lib/db');
 require('./models/Anuncio.js');
 
-app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'))
+app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
+app.use('/apiv1/tags', require('./routes/apiv1/tags'));
 app.use('/', routes);
 app.use('/users', users);
 
