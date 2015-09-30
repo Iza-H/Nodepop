@@ -12,7 +12,6 @@ router.get('/', function (req, res, next){
     var parametros = req.query;
 
 
-    console.log(JSON.stringify(parametros));
     var query = Anuncio.find();
 
     //nombre:
@@ -94,11 +93,7 @@ router.get('/', function (req, res, next){
         console.log(data);
         res.send(data);
         });
-    /*console.log(JSON.stringify(parametros));
-    Anuncio.find({'precio' : {$gt: 20 } }, function (err, data){
-       console.log(data);
-        res.send(data);
-    });*/
+
 
 });
 
@@ -112,7 +107,8 @@ router.post('/',function(req, res, next) {
     anuncio.save( function(err, creado) {
         if (err) {
             console.log(err);
-            return res.json({ok:false, error: err});
+            res.json({ok:false, error: err});
+            return;
         }
 
         // devolvemos el resultado

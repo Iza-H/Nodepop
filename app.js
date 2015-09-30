@@ -23,11 +23,29 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+app.use(function(req, res, next){
+    var userAgent = req.get('User-Agent');
+    console.log(userAgent);
+    req.esAndroid = userAgent.match(/Android/i);
+    req.esiOS = false;
+
+    if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)){
+       req.esiOS = true;
+    }
+    req.language = req.get('Accept-Language').match(/es/i) ? 'es' : 'en'; //en como idioma por defecto
+    next();
+
+});
+
+
 require('./lib/db');
 require('./models/Anuncio.js');
+require('./models/Usuario.js');
+require('./models/PushToken.js');
 
 app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
 app.use('/apiv1/tags', require('./routes/apiv1/tags'));
+app.use('/apiv1/usuarios', require('./routes/apiv1/usuarios'));
 app.use('/', routes);
 app.use('/users', users);
 
