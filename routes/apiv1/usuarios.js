@@ -12,11 +12,11 @@ router.post("/authenticate", function(req, res){
     if (!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('nombre')|| !req.body.hasOwnProperty('clave') ){
         res.json({ok: false, error : 'Missing data'});
     }
-    var email = req.body.email;
-    var nombre = req.body.nombre;
-    var clave = req.body.clave;
+    var emailSearch = req.body.email;
+    var nombreSearch = req.body.nombre;
+    var claveSearch = req.body.clave;
 
-    Usuario.findOne({'nombre':nombre, 'email':email, 'clave':clave}, function(err, data){
+    Usuario.findOne({'email':emailSearch}, function(err, data){
         if (err){
             res.json({'ok':'false', error:err});
             return;
@@ -25,12 +25,14 @@ router.post("/authenticate", function(req, res){
             res.json({'ok':'false', error:'USER not found'});
             return;
         } else{
-
+            checkIfUserCorrect(res, claveSearch, emailSearch, nombreSearch, data);
         }
     });
 
 
 });
+
+
 
 router.post("/nuevo", function (req, res){
     if (!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('nombre')|| !req.body.hasOwnProperty('clave') ){
@@ -45,8 +47,10 @@ router.post("/nuevo", function (req, res){
             res.json({ok:'false', error:'Email exists'});
             return;
         }
-
-        createPassForUser(req, res);
+        var clave = req.body.clave;
+        var nombre = req.body.nombre;
+        var email = req.body.email;
+        createPassForUser(res, clave, nombre, email);
 
 
 
@@ -56,30 +60,50 @@ router.post("/nuevo", function (req, res){
 
 });
 
-var createPassForUser = function (req, res){
+function createPassForUser(res, clave, nombre, email){
     bcrypt.genSalt(10, function(err, salt) {
         if (err){
-            res.json( {ok:false, error: err});
+            res.json({ok:false, error: err});
         }
-        bcrypt.hash(req.body.clave, salt, function(err, hash) {
+        bcrypt.hash(clave, salt, function(err, hash) {
             if (err){
-                return {ok:false, error: err};
+                res.json ({ok:false, error: err});
+                return;
             }
-            var usuario = new Usuario({nombre: req.body.nombre, email: req.body.email, clave: hash});
-            saveUser(usuario,res);
+            var usuario = new Usuario({nombre: nombre, email: email, clave: hash});
+            saveUser(res, usuario);
 
         });
     });
-}
+};
 
-var saveUser = function(user){
+function saveUser(res,user){
     user.save(function(err, saved){
         if (err){
             console.log(err);
-            return {ok:false, error: err};
+            res.json({ok:false, error: err});
+            return;
         }
-        return {ok:true, result: 'User saved'};
+        res.json({ok:true, result: 'User saved'});
     });
+}
+
+function checkIfUserCorrect(res, claveSearch, emailSearch, nombreSearch, data){
+    console.log(claveSearch);
+    bcrypt.compare(claveSearch, data.clave, function(err, isMatch) {
+        if(err) {
+            res.json({ok:false, result: err});
+            return;
+        }
+
+        if (isMatch===true){
+            res.json({ok:true, result: 'Authenticate success'});
+            return;
+        }else{
+            res.json({ok:false, result: 'Incorrect password'});
+        }
+
+    })
 }
 
 

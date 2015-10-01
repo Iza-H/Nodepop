@@ -32,7 +32,22 @@ app.use(function(req, res, next){
     if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)){
        req.esiOS = true;
     }
+
     req.language = req.get('Accept-Language').match(/es/i) ? 'es' : 'en'; //en como idioma por defecto
+
+   /* console.log(req.query);
+    if ((req.query && req.query.hasOwnProperty('token')) || (req.body && req.body.hasOwnProperty('token'))){
+        console.log('TOKEN');
+        if (req.esiOS || req.esAndroid){
+            var Token = mongoose.model('Token');
+
+            var token = new Token({usuarioEmail:'',token
+
+            })
+
+        }
+    }*/
+
     next();
 
 });
