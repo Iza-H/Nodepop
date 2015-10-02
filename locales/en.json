@@ -1,0 +1,19 @@
+{
+
+  "VENTA_FORMAT_ERROR" : "Incorrect format of the venta paramter",
+  "PRECIO_FORMAT_ERROR" : "Incorrect format of the precio paramter",
+  "LIMIT_FORMAT_ERROR" : "Incorrect format of the limit paramter",
+  "START_FORMAT_ERROR" : "Incorrect format of the start paramter",
+
+
+  "MISSING_DATA" : "Missing data",
+  "USER_NOT_FOUND" : "User not found",
+  "EMAIL_EXISTS" : "User with this email already exists",
+  "USER_SAVED" : "User correctly saved",
+  "AUTHENTICATE_SUCCESS" : "Correct authentication",
+  "INCORRECT_PASSWORD" : "Incorrect password"
+
+
+
+
+}

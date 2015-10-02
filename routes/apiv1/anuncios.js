@@ -6,7 +6,9 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Anuncio = mongoose.model('Anuncio');
 
-router.get('/', function (req, res, next){
+
+
+router.get('/', function (req, res){
 
     console.log("Run GET anuncios");
     var parametros = req.query;
@@ -22,7 +24,7 @@ router.get('/', function (req, res, next){
     //venta:
     if (parametros.hasOwnProperty("venta")){
         if (parametros.venta!=='true' && parametros.venta!=='false'){
-            return res.json({ok: false, error : 'Incorrect format of the venta paramter'});
+            return res.json({ok: false, error : res.__('VENTA_FORMAT_ERROR') });
         }else{
             query.where('venta').equals(parametros.venta);
         }
@@ -56,7 +58,7 @@ router.get('/', function (req, res, next){
         }else if (precio.match("^\-{1}[0-9]+$")){
             query.where('precio').lt(precio.replace("-",""));
         }else if(!precio.match("^[0-9]+$")){ //algo differente que el numero
-            return res.json({ok: false, error : 'Incorrect format of the price paramter'});
+            return res.json({ok: false, error : res.__('PRECIO_FORMAT_ERROR')});
         } else{
             query.where('precio').equals(precio);
         }
@@ -67,7 +69,7 @@ router.get('/', function (req, res, next){
     //limit
     if (parametros.hasOwnProperty("limit")){
         if (isNaN(parametros.limit) || parametros.limit<=0 || (parametros.limit % 1)!==0){
-            return res.json({ok: false, error : 'Incorrect format of the limit paramter'});
+            return res.json({ok: false, error : res.__('LIMIT_FORMAT_ERROR')});
         } else{
             query.limit(parametros.limit);
         }
@@ -77,7 +79,7 @@ router.get('/', function (req, res, next){
 
     if (parametros.hasOwnProperty("start")){
         if (isNaN(parametros.start) || parametros.start<0 || (parametros.start % 1)!==0){
-            return res.json({ok: false, error : 'Incorrect format of the start paramter'});
+            return res.json({ok: false, error : res.__('START_FORMAT_ERROR')});
         } else{
             query.skip(parametros.start);
         }
@@ -90,6 +92,10 @@ router.get('/', function (req, res, next){
     query.sort(sort);
 
     query.exec(function (err, data){
+        if (err){
+            res.json({ok:false, error: err});
+            return;
+        }
         console.log(data);
         res.send(data);
         });
@@ -98,7 +104,7 @@ router.get('/', function (req, res, next){
 });
 
 
-router.post('/',function(req, res, next) {
+router.post('/',function(req, res) {
     console.log("Run POST anuncios");
 
     var nuevoAnuncio = req.body;

@@ -5,12 +5,13 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Usuario = mongoose.model('Usuario');
 var bcrypt = require('bcrypt');
+var i18n = require('i18n');
 
 
 router.post("/authenticate", function(req, res){
     console.log("Run POST usuarios");
     if (!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('nombre')|| !req.body.hasOwnProperty('clave') ){
-        res.json({ok: false, error : 'Missing data'});
+        res.json({ok: false, error : res.__('MISSING_DATA')});
     }
     var emailSearch = req.body.email;
     var nombreSearch = req.body.nombre;
@@ -22,10 +23,10 @@ router.post("/authenticate", function(req, res){
             return;
         }
         if(!data){
-            res.json({'ok':'false', error:'USER not found'});
+            res.json({'ok':'false', error: res.__('USER_NOT_FOUND')});
             return;
         } else{
-            checkIfUserCorrect(res, claveSearch, emailSearch, nombreSearch, data);
+            checkIfUserCorrect(res, claveSearch,  data);
         }
     });
 
@@ -36,7 +37,7 @@ router.post("/authenticate", function(req, res){
 
 router.post("/nuevo", function (req, res){
     if (!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('nombre')|| !req.body.hasOwnProperty('clave') ){
-        res.json({ok: false, error : 'Missing data'});
+        res.json({ok: false, error : res.__('MISSING_DATA')});
     }
     Usuario.findOne({email:req.body.email}, function(err, data){
         if (err){
@@ -44,7 +45,7 @@ router.post("/nuevo", function (req, res){
             return;
         }
         if(data){
-            res.json({ok:'false', error:'Email exists'});
+            res.json({ok:'false', error: res.__('EMAIL_EXISTS')});
             return;
         }
         var clave = req.body.clave;
@@ -84,11 +85,11 @@ function saveUser(res,user){
             res.json({ok:false, error: err});
             return;
         }
-        res.json({ok:true, result: 'User saved'});
+        res.json({ok:true, result: res.__('USER_SAVED'), userEmail: saved.email});
     });
 }
 
-function checkIfUserCorrect(res, claveSearch, emailSearch, nombreSearch, data){
+function checkIfUserCorrect(res, claveSearch, data){
     console.log(claveSearch);
     bcrypt.compare(claveSearch, data.clave, function(err, isMatch) {
         if(err) {
@@ -97,10 +98,10 @@ function checkIfUserCorrect(res, claveSearch, emailSearch, nombreSearch, data){
         }
 
         if (isMatch===true){
-            res.json({ok:true, result: 'Authenticate success'});
+            res.json({ok:true, result: res.__('AUTHENTICATE_SUCCESS')});
             return;
         }else{
-            res.json({ok:false, result: 'Incorrect password'});
+            res.json({ok:false, result: res.__('INCORRECT_PASSWORD')});
         }
 
     })

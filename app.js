@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var i18n = require('./lib/i18n_conf');
+
 var app = express();
 
 // view engine setup
@@ -23,7 +25,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
 app.use(function(req, res, next){
+    // default: using 'accept-language' header to guess language settings
+    i18n.init(req, res);
+
     var userAgent = req.get('User-Agent');
     console.log(userAgent);
     req.esAndroid = userAgent.match(/Android/i);
@@ -33,7 +39,7 @@ app.use(function(req, res, next){
        req.esiOS = true;
     }
 
-    req.language = req.get('Accept-Language').match(/es/i) ? 'es' : 'en'; //en como idioma por defecto
+
 
    /* console.log(req.query);
     if ((req.query && req.query.hasOwnProperty('token')) || (req.body && req.body.hasOwnProperty('token'))){
@@ -51,6 +57,7 @@ app.use(function(req, res, next){
     next();
 
 });
+
 
 
 require('./lib/db');
