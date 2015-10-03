@@ -8,6 +8,34 @@ var Anuncio = mongoose.model('Anuncio');
 
 
 
+//Send picture
+//GET apiv1/foto/
+router.get('/foto/:picture', function(req, res, next){
+    var picture = req.params.picture;
+    var ruta;
+    if (picture.indexOf(".")>0){
+        ruta = req.ruta + '/public/images/' + picture;
+    }else{
+        ruta = req.ruta + '/public/images/' + picture + ".jpg"; //default .jpg;
+    }
+
+    res.sendFile(ruta, function (err, data) {
+        if (err) {
+            console.log(err);
+            res.status(500).json({ok: false, error : err});
+            return;
+
+        } else {
+            console.log(res.__('FILE_SENT') + data);
+            return;
+        }
+    });
+
+});
+
+
+//Search of articles
+//GET apiv1/articulos
 router.get('/', function (req, res){
 
     console.log("Run GET anuncios");
@@ -24,7 +52,8 @@ router.get('/', function (req, res){
     //venta:
     if (parametros.hasOwnProperty("venta")){
         if (parametros.venta!=='true' && parametros.venta!=='false'){
-            return res.json({ok: false, error : res.__('VENTA_FORMAT_ERROR') });
+            res.status(400).json({ok: false, error : res.__('VENTA_FORMAT_ERROR') });
+            return;
         }else{
             query.where('venta').equals(parametros.venta);
         }
@@ -58,18 +87,18 @@ router.get('/', function (req, res){
         }else if (precio.match("^\-{1}[0-9]+$")){
             query.where('precio').lt(precio.replace("-",""));
         }else if(!precio.match("^[0-9]+$")){ //algo differente que el numero
-            return res.json({ok: false, error : res.__('PRECIO_FORMAT_ERROR')});
+            res.status(400).json({ok: false, error : res.__('PRECIO_FORMAT_ERROR')});
+            return;
         } else{
             query.where('precio').equals(precio);
         }
-
     }
-
 
     //limit
     if (parametros.hasOwnProperty("limit")){
-        if (isNaN(parametros.limit) || parametros.limit<=0 || (parametros.limit % 1)!==0){
-            return res.json({ok: false, error : res.__('LIMIT_FORMAT_ERROR')});
+        if (isNaN(parametros.limit) || parametros.limit<0 || (parametros.limit % 1)!==0){
+            res.status(400).json({ok: false, error : res.__('LIMIT_FORMAT_ERROR')});
+            return;
         } else{
             query.limit(parametros.limit);
         }
@@ -77,9 +106,11 @@ router.get('/', function (req, res){
         query.limit(1000);
     }
 
+    //start
     if (parametros.hasOwnProperty("start")){
         if (isNaN(parametros.start) || parametros.start<0 || (parametros.start % 1)!==0){
-            return res.json({ok: false, error : res.__('START_FORMAT_ERROR')});
+            res.status(400).json({ok: false, error : res.__('START_FORMAT_ERROR')});
+            return;
         } else{
             query.skip(parametros.start);
         }
@@ -93,32 +124,60 @@ router.get('/', function (req, res){
 
     query.exec(function (err, data){
         if (err){
-            res.json({ok:false, error: err});
+            console.log(err);
+            res.staus(500).json({ok:false, error: err});
+            return;
+        }else{
+            console.log(data);
+            res.status(400).send({ok:true, result: data});
             return;
         }
-        console.log(data);
-        res.send(data);
-        });
+    });
 
 
 });
 
+//Search of all tags that are in the DB
+//Return only distinct values
+//GET apiv1/anuncios/tags
+router.get('/tags', function (req, res, next){
+    console.log("Run GET tags");
 
+
+    Anuncio.find().distinct('tags', function (error, tags){
+        if(error) {
+            console.log(err);
+            res.json({ok:false, error: error})
+            return;
+        } else {
+            console.log(tags);
+            res.json({ok:true, tags: tags})
+            return;
+        }
+
+
+    });
+});
+
+
+//Creation of new articules:
+//POST apiv1/anuncios
 router.post('/',function(req, res) {
     console.log("Run POST anuncios");
 
-    var nuevoAnuncio = req.body;
+    var nuevoAnuncio = req.body;;
     var anuncio = new Anuncio(nuevoAnuncio);
 
     anuncio.save( function(err, creado) {
         if (err) {
             console.log(err);
-            res.json({ok:false, error: err});
+            res.status(400).json({ok:false, error: res.__('VALIDATION_ERROR')});
             return;
         }
 
         // devolvemos el resultado
-        res.json({ok:true, anuncio: creado});
+        res.status(200).json({ok:true, anuncio: creado});
+        return;
 
     });
 

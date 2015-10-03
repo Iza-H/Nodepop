@@ -1,17 +1,21 @@
 {
+	"VENTA_FORMAT_ERROR": "Incorrecto parametro - venta",
+	"PRECIO_FORMAT_ERROR": "Incorrecto parametro - precio",
+	"LIMIT_FORMAT_ERROR": "Incorrecto parametro - limit",
+	"START_FORMAT_ERROR": "Incorrecto parametro - start",
+	"VALIDATION_ERROR": "Error de la validación de los parametros",
 
-  "VENTA_FORMAT_ERROR" : "Incorrecto parametro - venta",
-  "PRECIO_FORMAT_ERROR" : "Incorrecto parametro - precio" ,
-  "LIMIT_FORMAT_ERROR" :  "Incorrecto parametro - limit",
-  "START_FORMAT_ERROR" : "Incorrecto parametro - start",
+
+	"MISSING_DATA": "Falta datos",
+	"USER_NOT_FOUND": "Usuario no encontrado",
+	"EMAIL_EXISTS": "Usuario con este email ya existe",
+	"USER_SAVED": "Usuario guardado correctamnte",
+	"AUTHENTICATE_SUCCESS": "Autenticación correcta",
+	"AUTHENTICATE_ERROR": "Autenticación incorrecta",
+	"INCORRECT_PASSWORD": "Contraseña incorrecta",
 
 
-  "MISSING_DATA" : "Falta datos",
-  "USER_NOT_FOUND" : "Usuario no encontrado",
-  "EMAIL_EXISTS" : "Usuario con este email ya existe",
-  "USER_SAVED" : "Usuario guardado correctamnte",
-  "AUTHENTICATE_SUCCESS" : "Autenticación correcta",
-  "INCORRECT_PASSWORD" : "Contraseña incorrecta"
-
+	"FILE_SENT": "Fichero enviado: ",
+	"TOKEN_MANDATORY": "Token es obligatorio"
 
 }

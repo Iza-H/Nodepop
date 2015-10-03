@@ -4,6 +4,7 @@
   "PRECIO_FORMAT_ERROR" : "Incorrect format of the precio paramter",
   "LIMIT_FORMAT_ERROR" : "Incorrect format of the limit paramter",
   "START_FORMAT_ERROR" : "Incorrect format of the start paramter",
+  "VALIDATION_ERROR" : "Validetion error",
 
 
   "MISSING_DATA" : "Missing data",
@@ -11,9 +12,11 @@
   "EMAIL_EXISTS" : "User with this email already exists",
   "USER_SAVED" : "User correctly saved",
   "AUTHENTICATE_SUCCESS" : "Correct authentication",
-  "INCORRECT_PASSWORD" : "Incorrect password"
+  "AUTHENTICATE_ERROR" : "Incoorrect authentication",
+  "INCORRECT_PASSWORD" : "Incorrect password",
 
-
+  "FILE_SENT" : "File sent: ",
+  "TOKEN_MANDATORY" : "Token is mandatory"
 
 
 }

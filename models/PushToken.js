@@ -3,12 +3,12 @@
 var mongoose = require ('mongoose');
 
 var pushTokenSchema = mongoose.Schema({
-    platforma : {type: String, enum: ['ios', 'android']},
-    token : String,
-    usuarioEmail : String
+    platforma : {type: String, enum: ['ios', 'android'], required:true},
+    token : {type: String, required:true},
+    usuarioEmail : {type: String, required:true}
 });
 
-var Token = mongoose.model('Token', pushTokenSchema);
+var PushToken = mongoose.model('PushToken', pushTokenSchema);
 
 
-module.exports = Token;
+module.exports = PushToken;
