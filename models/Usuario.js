@@ -2,6 +2,7 @@
 
 var mongoose = require ('mongoose');
 var bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
 
 var usuarioSchema = mongoose.Schema ({
     nombre : {type: String, required: true},
@@ -11,56 +12,57 @@ var usuarioSchema = mongoose.Schema ({
 
 
 
-
+//Cretion of the user's password:
+//Return a password in a hash form:
 usuarioSchema.methods.createPassForUser = function createPassForUser (cb) {
     var pass =  this.clave;
-    var name = this.nombre;
-    var email = this.email;
     bcrypt.genSalt(10, function(err, salt) {
         if (err){
-
             console.log('Error');
             cb(err);
-            //res.json({ok:false, error: err});
             return;
         } else {
             bcrypt.hash(pass, salt, function (err, hash) {
                 if (err) {
                     console.log('error ' + err);
-                    //res.json ({ok:false, error: err});
                     cb(err);
                     return;
                 }
-
-                var usuario = new Usuario({nombre: name, email: email, clave: hash});
-                saveUser(usuario, function (err, data){
-                    if (err){
-                        return cb(err);
-                    }else{
-                        return cb(null,data );
-                    }
-                });
-
+                return cb(null,hash);
             });
         }
     });
 
 };
 
-function saveUser(user, cb){
-    user.save(function(err, saved){
-        if (err){
+
+//Function used to verification of the user's password
+usuarioSchema.methods.checkIfPassCorrect = function(claveSearch, cb){
+    var claveDB = this.clave;
+    var data = this;
+    var configJWT = require( '../localConfig');
+    bcrypt.compare(claveSearch, claveDB, function(err, isMatch) {
+        if(err) {
             console.log(err);
-            //res.status(500).json({ok:false, error: err});
             cb(err);
             return;
         }
-        console.log('User saved ' +  saved.email);
-        cb(null,'USER_SAVED' );
-        //res.status(200).json({ok:true, result: res.__('USER_SAVED'), userEmail: saved.email});
-        return;
-    });
+        if (isMatch===true){
+            var token = jwt.sign( data, configJWT.jwt.secret, configJWT.jwt.expiresInMinutes);
+            console.log('Authentification success ' + data);
+            cb(null, {success: 'AUTHENTICATE_SUCCESS', token:token});
+            //res.status(200).json({ok:true, result: res.__('AUTHENTICATE_SUCCESS'), token : token });
+            return;
+        } else{
+            console.log('Incorrect password' + data);
+            cb({errorMessage:'INCORRECT_PASSWORD'});
+            //res.status(400).json({ok:false, result: res.__('INCORRECT_PASSWORD')});
+            return;
+        }
+
+    })
 }
+
 
 
 

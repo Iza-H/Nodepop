@@ -59,7 +59,7 @@ router.get('/', function (req, res){
         }
     }
 
-    //tags
+    //tag
     if (parametros.hasOwnProperty("tag")){
         var tags = parametros.tag.split(",");
         query.where('tags').all(tags);

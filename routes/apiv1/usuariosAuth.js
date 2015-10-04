@@ -28,10 +28,17 @@ router.post("/nuevo", function (req, res){
             res.status(400).json({ok:'false', error: res.__('EMAIL_EXISTS')});
             return;
         }
-        var clave = req.body.clave;
-        var nombre = req.body.nombre;
-        var email = req.body.email;
-        createPassForUser(res, clave, nombre, email);
+
+        var newUser= new Usuario({nombre: req.body.nombre, clave: req.body.clave, email: req.body.email});
+        newUser.createPassForUser(function (err, result){
+            if (err){
+                res.status(500).json({ok:false, error: err});
+                return;
+            }else{
+                newUser.clave = result;
+                saveUser(res, newUser);
+            }
+        })
 
     });
 
@@ -39,26 +46,6 @@ router.post("/nuevo", function (req, res){
 
 });
 
-
-function createPassForUser(res, clave, nombre, email){
-    bcrypt.genSalt(10, function(err, salt) {
-        if (err){
-            console.log(err);
-            res.json({ok:false, error: err});
-            return;
-        }
-        bcrypt.hash(clave, salt, function(err, hash) {
-            if (err){
-                console.log(err);
-                res.json ({ok:false, error: err});
-                return;
-            }
-            var usuario = new Usuario({nombre: nombre, email: email, clave: hash});
-            saveUser(res, usuario);
-
-        });
-    });
-};
 
 
 function saveUser(res,user){

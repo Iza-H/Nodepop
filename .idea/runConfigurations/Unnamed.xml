@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Unnamed" type="NodeJSRemoteDebug" factoryName="Node.js Remote Debug">
+    <node-js-remote-debug debug-port="2000" />
+    <method />
+  </configuration>
+</component>

@@ -7,7 +7,6 @@ var mongoose = require('mongoose');
 
 
 
-
 var anuncioSchema = mongoose.Schema({
     nombre : {type: String, required: true},
     venta : {type : Boolean, required: true},
@@ -17,13 +16,12 @@ var anuncioSchema = mongoose.Schema({
 });
 
 
+//Validation of tags:
 function isCorrectValue (table){
-    console.log(table);
     var isCorrect = true;
     var defaultTags = ['mobile', 'lifestyle', 'motor', 'work'];
     table.forEach( function (value, index){
         //incorrect tag:
-        console.log(value);
         if (defaultTags.indexOf(value)===-1){
             console.log(false);
             isCorrect = false;
