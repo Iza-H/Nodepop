@@ -1,0 +1,45 @@
+{
+  "articulos":[
+    {
+      "nombre": "Bicicleta",
+      "precio": 22,
+      "venta": false,
+      "foto" : "bici.jpg",
+      "tags": [
+        "lifestyle"
+      ]
+    },
+
+    {
+      "nombre": "iPad",
+      "precio": 55,
+      "venta": true,
+      "foto" : "iPad.jpg",
+      "tags": [
+        "mobile",
+        "lifestyle"
+      ]
+    },
+
+    {
+      "nombre": "Tablet",
+      "precio": 122,
+      "venta": true,
+      "tags": [
+        "mobile",
+        "lifestyle",
+        "work"
+      ]
+    },
+
+    {
+      "nombre": "TV",
+      "precio": 30,
+      "venta": true,
+      "tags": [
+        "lifestyle"
+      ]
+    }
+  ]
+
+}

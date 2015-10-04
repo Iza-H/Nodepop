@@ -20,7 +20,7 @@ router.post("/authenticate", function(req, res){
     var emailSearch = req.body.email;
     //var nombreSearch = req.body.nombre;
     var claveSearch = req.body.clave;
-
+    console.log(req.body.clave);
     Usuario.findOne({'email':emailSearch}, function(err, data){
         if (err){
             res.status(500).json({'ok':'false', error:err});
