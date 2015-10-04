@@ -1,10 +1,10 @@
 {
 
-  "VENTA_FORMAT_ERROR" : "Incorrect format of the venta paramter",
-  "PRECIO_FORMAT_ERROR" : "Incorrect format of the precio paramter",
-  "LIMIT_FORMAT_ERROR" : "Incorrect format of the limit paramter",
-  "START_FORMAT_ERROR" : "Incorrect format of the start paramter",
-  "VALIDATION_ERROR" : "Validetion error",
+  "VENTA_FORMAT_ERROR" : "Incorrect format of the venta parameter",
+  "PRECIO_FORMAT_ERROR" : "Incorrect format of the precio parameter",
+  "LIMIT_FORMAT_ERROR" : "Incorrect format of the limit parameter",
+  "START_FORMAT_ERROR" : "Incorrect format of the start parameter",
+  "VALIDATION_ERROR" : "Validation error",
 
 
   "MISSING_DATA" : "Missing data",
@@ -12,7 +12,7 @@
   "EMAIL_EXISTS" : "User with this email already exists",
   "USER_SAVED" : "User correctly saved",
   "AUTHENTICATE_SUCCESS" : "Correct authentication",
-  "AUTHENTICATE_ERROR" : "Incoorrect authentication",
+  "AUTHENTICATE_ERROR" : "Incorrect authentication",
   "INCORRECT_PASSWORD" : "Incorrect password",
 
   "FILE_SENT" : "File sent: ",
