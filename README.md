@@ -306,7 +306,51 @@ Precio igual que x:
 		
 * limit : *Numero, min=0, sirve para especificar cuantos resultados tiene que devolver la búsqueda;*
 * start : *Numero, min=0, sirve para especificar cunatos primeros resultados tiene que no incluir la búsqueda;*
-* sort :  *Numero, por defecto id, permite elegir como ordenar los resultados*
+* sort :  *Numero, por defecto id, permite elegir como ordenar los resultados, modos de usarlo:*
+
+Búsqueda por el precio ascendiente:
+
+```
+	sort=precio
+```
+
+Búsqueda por el precio descendiente:
+
+```
+	sort=precio
+```
+* incluideTotal : *Boolean, donde true sygnifica que en el resultado recibiremos  tambien el numero de los anuncios que cumplan los requisitos*
+
+Ejemplo:
+
+```
+GET /apiv1/anuncios?includeTotal=true&limit=1
+```
+
+Resultado:
+
+```
+{
+  "ok": true,
+  "result": [
+    {
+      "_id": "561142a53a2460bd0635a1a8",
+      "nombre": "Bicicleta",
+      "precio": 22,
+      "venta": false,
+      "foto": "bici.jpg",
+      "__v": 0,
+      "tags": [
+        "lifestyle"
+      ]
+    }
+  ],
+  "total": 4
+}
+```
+
+El resultado devuelve sólo un resultado, ya que en la petición el limit=1, pero recibimos total=4 - lo que syginfica que hay otros tres más resultados que cumplen los requisitos.
+ 
 		
 
 **Ejemplos:**

@@ -129,8 +129,26 @@ router.get('/', function (req, res){
             return;
         }else{
             console.log(data);
-            res.status(400).send({ok:true, result: data});
-            return;
+            //count result:
+            if (parametros.hasOwnProperty("includeTotal")){
+                Anuncio.count(query._conditions, function(err, count) {
+                    if (err){
+                        console.log(err);
+                        res.status(500).send({ok:false, err: err});
+
+                        return;
+                    }
+                    console.log(count);
+                    res.status(200).send({ok:true, result: data, total:count});
+
+                    return;
+                });
+            }else{
+                res.status(200).send({ok:true, result: data});
+                return;
+            }
+
+
         }
     });
 
