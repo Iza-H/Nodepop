@@ -4,9 +4,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Usuario = mongoose.model('Usuario');
-var bcrypt = require('bcrypt');
-var i18n = require('i18n');
-var jwt = require('jsonwebtoken');
+
 
 
 
@@ -18,6 +16,7 @@ var jwt = require('jsonwebtoken');
 router.post("/nuevo", function (req, res){
     if (!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('nombre')|| !req.body.hasOwnProperty('clave') ){
         res.status(400).json({ok: false, error : res.__('MISSING_DATA')});
+        return;
     }
     Usuario.findOne({email:req.body.email}, function(err, data){
         if (err){

@@ -49,6 +49,7 @@ function checkUser(req, res, claveSearch, data){
                 return;
             }else{
                 res.status(500).json({'ok':'false', error:err});
+                return;
             }
 
         }
