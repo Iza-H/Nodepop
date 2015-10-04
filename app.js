@@ -31,7 +31,7 @@ app.use(function(req, res, next) {
     console.log(userAgent);
     req.isAndroid = userAgent.match(/Android/i);
     req.isiOS = false;
-    if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)){
+    if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i) || userAgent.match(/Apple/i)){
         req.isiOS = true;
     }
 

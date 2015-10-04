@@ -62,7 +62,7 @@ Las contraseñas de los usuarios se guardan el la base de datos como un hash.
 
 * Registro de los tokens
 
-Si las peticione se envia usando un dispositivo Android o iPad/iPhone se guarda en la base de datos el token, el dispositivo y el email del usuario. 
+Si las peticione se envia usando un dispositivo Android o iPad/iPhone se guarda en la base de datos el token recibido desde un dispositivo, el típo del dispositivo y el email del usuario.
 
 
 
