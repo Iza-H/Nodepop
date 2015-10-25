@@ -1,5 +1,26 @@
 #Nodepop API
 
+
+
+##Detalles del despliegue
+
+URL - http://izabelaproject.cloudapp.net/
+Archivo estático - http://izabelaproject.cloudapp.net/public/nodepop.jpg
+IP - http://65.52.38.99/
+
+Datos para logear
+
+```
+{
+  "nombre": "Test",
+  "clave": "claveSecreta",
+  "email": "email@test.es"
+}
+```
+
+
+
+
 Nodepop ofrece un servicio a una app de venta de artículos de segunda mano.
 
 Funciones disponibles desde la API:
@@ -63,8 +84,6 @@ Las contraseñas de los usuarios se guardan el la base de datos como un hash.
 * Registro de los tokens
 
 Si las peticione se envia usando un dispositivo Android o iPad/iPhone se guarda en la base de datos el token recibido desde un dispositivo, el típo del dispositivo y el email del usuario.
-
-
 
 
 
