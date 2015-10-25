@@ -5,7 +5,9 @@
 ##Detalles del despliegue
 
 URL - http://izabelaproject.cloudapp.net/
+
 Archivo estático - http://izabelaproject.cloudapp.net/public/nodepop.jpg
+
 IP - http://65.52.38.99/
 
 Datos para logear
